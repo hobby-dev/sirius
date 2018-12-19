@@ -42,7 +42,7 @@ class List {
 
   void PushBack(std::string &&value);
   ListNode *accessNode(uint64_t index);
-  uint32_t Size() { return count; }
+  uint64_t Size() { return count; }
   /**
    * @param file must be opened with fopen(path, "wb"))
    */
