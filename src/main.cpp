@@ -128,8 +128,6 @@ SCENARIO("List can be Deserialized", "[third]") {
   }
 }
 
-
-
 SCENARIO("Random pointers in List Serialized and Deserialized correctly", "[third]") {
   GIVEN("A list with some items pointing to each other") {
     List list;
@@ -171,8 +169,7 @@ SCENARIO("Random pointers in List Serialized and Deserialized correctly", "[thir
               cleanList.Deserialize(readFile);
               THEN("List has correct size") {
                 REQUIRE(cleanList.Size() == 15);
-              }
-              THEN("Random pointers are pointing correctly") {
+              }THEN("Random pointers are pointing correctly") {
                 REQUIRE(cleanList.accessNode(7)->rand == cleanList.accessNode(12));
                 REQUIRE(cleanList.accessNode(13)->rand == cleanList.accessNode(0));
                 REQUIRE(cleanList.accessNode(14)->rand == cleanList.accessNode(14));
