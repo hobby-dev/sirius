@@ -1,0 +1,21 @@
+# CMake & make stuff
+CMakeFiles
+CMakeCache.txt
+*.cmake
+build/Makefile
+cmake-build-debug
+
+# Build output
+build
+bin
+
+# Generated code
+**/*build/*.h
+
+# ctags
+tags
+
+# IDE settings
+.idea
+*.iml
+.vscode
