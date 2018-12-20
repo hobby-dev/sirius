@@ -12,28 +12,50 @@ namespace sirius {
 namespace {
 
 constexpr auto UINT_64_SIZE = sizeof(uint64_t);
+constexpr auto UINT_64_COUNT = 1;
 constexpr auto CHAR_SIZE = sizeof(char);
 constexpr uint64_t RAND_NULLPTR = 0xFFFFFFFFFFFFFFFF;
 
 void writeUint64(uint64_t value, FILE *file) {
-  fwrite(&value, UINT_64_SIZE, 1, file);
+  const size_t countWritten = fwrite(&value, UINT_64_SIZE, UINT_64_COUNT, file);
+  if (countWritten != UINT_64_COUNT)
+  {
+    perror ("Error writing to file:");
+    exit(42);
+  }
 }
 
 void writeString(const std::string &value, FILE *file) {
-  writeUint64(value.size(), file);
-  fwrite(value.c_str(), CHAR_SIZE, value.size(), file);
+  const size_t count = value.size();
+  writeUint64(count, file);
+  const size_t countWritten = fwrite(value.c_str(), CHAR_SIZE, count, file);
+  if (countWritten != count)
+  {
+    perror ("Error writing to file:");
+    exit(43);
+  }
 }
 
 uint64_t readUint64(FILE *file) {
   uint64_t data;
-  fread(&data, UINT_64_SIZE, 1, file);
+  const size_t countRead = fread(&data, UINT_64_SIZE, UINT_64_COUNT, file);
+  if (countRead != UINT_64_COUNT)
+  {
+    perror ("Error reading from file:");
+    exit(44);
+  }
   return data;
 }
 
 std::string readString(FILE *file) {
   const uint64_t length = readUint64(file);
   std::string ret(length, 0); // pre-allocate string for writing
-  fread(&ret[0], CHAR_SIZE, length, file);
+  const size_t bytesRead = fread(&ret[0], CHAR_SIZE, length, file);
+  if (bytesRead != length)
+  {
+    perror ("Error reading from file:");
+    exit(45);
+  }
   return ret;
 }
 
