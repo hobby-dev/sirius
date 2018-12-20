@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "first.hpp"
 
 namespace sirius {
